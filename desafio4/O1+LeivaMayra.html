@@ -9,69 +9,68 @@
 <body>
     <div class='container'>
         <input type="text" name="words" id="words">
-        <p id="inverted_text"></p>
+        <span id="inverted_text"></span>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.6.7/rxjs.umd.js"></script>
     <script>
-        // importar la libreria
-        const { fromEvent} = rxjs;
-        
-        //Arreglos de letras a invertir
-        let arrLetters = [];
-        let newArr = [];
-        //Lugar sonde se mostrará el words invertido
+        const { Observable, pipe } = rxjs;
+        const { map } = rxjs.operators;
+        let arrDato = [];
+        // let arrAux = [];
+        let input_words = document.getElementById('words');
         let inverted_text = document.getElementById('inverted_text');
-        // Obtengo input
-        const $words = document.getElementById('words');
 
-        // creo el evento usando rxjs, le paso el input y el evento y esto me devuelve un observable
-        const keyup$ = fromEvent($words, 'keyup');
+        function espejarInput() {
+            return new Observable(suscriber => {
 
-        //Invirtiendo arreglo
-        const inverseArr = (arr) => {
-            newArr.unshift(arr[arr.length - 1]);
-            return newArr.join('');
+                // funcion que se ejecutara cuando detecte el evento "input"
+                function ateEventInput() {
+                    let dato = input_words.value;
+
+                    if (dato == 'error') {
+                        suscriber.error('Error de entrada');
+                    }
+                    else if (dato == 'complete') {
+                        suscriber.complete();
+                    }
+                    else {
+                        arrDato.push(dato[dato.length - 1]);
+                        let arrAux = [...arrDato];
+                        // TODO espejar el string (dato) usando array.reverse()
+                        let datoEspejado = arrAux.reverse().join('');
+                        suscriber.next(datoEspejado);
+                    }
+                }
+
+                // agrego el listener pasandole el evento y la funcion a ejecutar
+                input_words.addEventListener('input', ateEventInput);
+
+                return () => {
+                    input_words.removeEventListener('input', ateEventInput);
+                    input_words.disabled = true;
+                    inverted_text.innerText = '';
+                    console.warn('Observable Input return');
+                }
+            })
         }
 
-        const finishObs = (words) => {
-            let text_lowered = words.trim().toLowerCase();
-            if (text_lowered === 'error') {
-                console.error('Observable ends :C');
-                return new Error();
-            } else if (text_lowered === 'complete') {
-                console.log('Observable has been completed successfully');
-                return true;
-            } 
-        }
+        // a obtener el input espejado, lo agrego al html
+        let suscriptorEspejarInput = espejarInput()
+            .subscribe(
+                dato => {
+                    //console.log('suscribe ->',dato)
+                    inverted_text.innerText = dato
+                },   //next
+                error => console.error(error), //error
+                () => console.warn('Observable Input complete ') //complete
+            )
 
-        const addLetters = () => {
-            if (event.key.match(/.+/) != null) {
-                arrLetters.push(event.key);
-                inverted_text.innerText = inverseArr(arrLetters);
-            }
-        }
-
-        // al observable le agrego un subscriptor que realiza logica
-        const subscription = keyup$.subscribe((event) => {
-            if (event.key.match(/.+/)[0].length === 1) {
-                let continueObs = finishObs(words.value);
-                (continueObs === undefined) ? addLetters() : unsubscribeAll();
-            }
-        });
-
-        const unsubscribeAll = () => {
-            words.value = '';
-            words.disabled = true;
-            inverted_text.innerText = 'Game over';
-            inverted_text.style.color = 'red';
-            subscription.unsubscribe();
-        }
-
-        // cuando pasen x segs, desubscribo al subscriptor
         setTimeout(() => {
-            unsubscribeAll();
-        }, 30000);
+            console.warn('Observable Input desuscripción ')
+            suscriptorEspejarInput.unsubscribe()
+        }, 30000)
+
 
     </script>
 
