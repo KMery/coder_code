@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div class='container'>
+        <input type="text" name="words" id="words">
+        <p id="inverted_text"></p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.6.7/rxjs.umd.js"></script>
+    <script>
+        // importar la libreria
+        const { fromEvent, operators } = rxjs;
+        
+        //Arreglos de letras a invertir
+        let arrLetters = [];
+        let newArr = [];
+        //Lugar sonde se mostrará el words invertido
+        let inverted_text = document.getElementById('inverted_text');
+        // Obtengo input
+        const $words = document.getElementById('words');
+
+        // creo el evento usando rxjs, le paso el input y el evento y esto me devuelve un observable
+        const keyup$ = fromEvent($words, 'keyup');
+
+        //Invirtiendo arreglo
+        const inverseArr = (arr) => {
+            newArr.unshift(arr[arr.length - 1]);
+            return newArr.join('');
+        }
+
+        const finishObs = (words) => {
+            let text_lowered = words.trim().toLowerCase();
+            if (text_lowered === 'error') {
+                return new Error('Observable ends :C');
+            } else if (text_lowered === 'complete') {
+                console.log('Observable has been completed successfully');
+                return true;
+            } 
+        }
+
+        const addLetters = () => {
+            if (event.key.match(/.+/) != null) {
+                arrLetters.push(event.key);
+                inverted_text.innerText = inverseArr(arrLetters);
+            }
+        }
+
+        // al observable le agrego un subscriptor que realiza logica
+        const filteredObs = keyup$.pipe(
+            operators.filter(char => char != ' ')
+        );
+
+        const unsubscribeAll = () => {
+            words.value = '';
+            words.disabled = true;
+            inverted_text.innerText = 'Game over';
+            inverted_text.style.color = 'red';
+            subscription.unsubscribe();
+        }
+
+        // cuando pasen x segs, desubscribo al subscriptor
+        setTimeout(() => {
+            unsubscribeAll();
+        }, 30000);
+
+        const observer = {
+            next: (event) => {
+                if (event.key.match(/.+/)[0].length === 1) {
+                    let continueObs = finishObs(words.value);
+                    (continueObs === undefined) ? addLetters() : unsubscribeAll();
+                }
+
+            },
+            error: (err) => console.error(err),
+            complete: () => console.log("completed")
+        }
+
+        //subscribe to the filtered observable
+        const subscription = filteredObs.subscribe(observer);
+
+    </script>
+
+</body>
+
+</html>
