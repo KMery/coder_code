@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clases</title>
+</head>
+<body>
+    <h1>Clases</h1>
+    <h2>by Mayra Leiva</h2>
+    <iframe src="https://giphy.com/embed/umuIFEkQ33aSI" width="480" height="300" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/love-funny-umuIFEkQ33aSI"></a></p>
+
+    <script>
+        class Libro {
+            constructor(book, autor) {
+                this.book = book;
+                this.autor = autor;
+            }
+        }
+
+        class Usuario {
+            constructor(nombre, apellido, libros, mascotas) {
+                this.nombre = nombre;
+                this.apellido = apellido;
+                this.libros = libros;
+                this.mascotas = mascotas;
+            }
+
+            getFullName() {
+                return `${this.nombre} ${this.apellido}`;
+            }
+
+            addMascota(nueva_mascota) {
+                this.mascotas.push(nueva_mascota);
+            }
+
+            getMascotas() {
+                return this.mascotas.length;
+            }
+
+            addBook(book, autor) {
+                this.libros.push(new Libro(book, autor));
+            }
+
+            getBooks() {
+                return this.libros.map(libro => libro.book);
+            }
+        }
+
+        //Testeando
+        //Creación usuario
+        let nuevo_usuario = new Usuario('Mayra', 'Leiva', [], ['mascota1']);
+        console.log(nuevo_usuario);
+        //Obtener nombre completo
+        console.log('Nombre completo', nuevo_usuario.getFullName());
+        //Agregar y obtener cantidad de mascotas
+        nuevo_usuario.addMascota('nueva mascota');
+        console.log('Cantidad de mascotas', nuevo_usuario.getMascotas());
+        //Agregar y obtener libros cargados
+        nuevo_usuario.addBook('Libro1', 'Autor1');
+        console.log('Libros cargados', nuevo_usuario.getBooks());
+    </script>
+</body>
+</html>
