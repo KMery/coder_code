@@ -1,24 +1,24 @@
-const retener = ret => { for( let i = 0; i < ret * 3e6; i++ ); };
-
-const recorrePalabras = (texto, tiempo, totalPalabras, cb) => {
+const recorrePalabras = (texto, tiempo = 1000, totalPalabras, cb) => {
     let palabras = texto.split(' ');
     totalPalabras += palabras.length;
-    let ret = tiempo != null ? tiempo : 1000;
 
-    palabras.forEach(palabra => {
-        retener(ret);
-        console.log(palabra);
-    });
-
-    cb(null, totalPalabras);
+    let counter = 0;
+    const interval = setInterval(() => {
+        console.log(palabras[counter++]);
+        if (counter === palabras.length) {
+            clearInterval(interval);
+            cb(null, totalPalabras);
+        }
+    }, tiempo);
+    
     return totalPalabras;
 }
 
 //Variables configurables
-const texto1 = 'Frozen';
-const texto2 = 'Hace frío y estoy lejos de casa';
-const texto3 = 'Hace tiempo que estoy sentado sobre esta piedra';
-const tiempo = 300;
+const texto1 = 'uno';
+const texto2 = 'dos tres';
+const texto3 = 'cuatro cinco seis';
+const tiempo = 3000;
 
 
 //Llamada a funciones
@@ -27,6 +27,6 @@ recorrePalabras(texto1, null, 0, (error, totalPalabras) => {
     recorrePalabras(texto2, tiempo, totalPalabras, (error, totalPalabras) => {
         recorrePalabras(texto3, tiempo, totalPalabras, (error, totalPalabras) => {
             console.log(`\nProceso terminado\nTotal palabras: ${totalPalabras}`);
-        })
-    })
-}) 
+        });
+    });
+}); 
