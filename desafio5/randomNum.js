@@ -10,7 +10,7 @@ class objAleatorio {
         this.title = `Producto ${numAleatorio(1, 10, 'round')}`;
         this.price = numAleatorio(0.00, 9999.9);
         this.thumbnail = `Foto ${numAleatorio(1, 10, 'round')}`;
-    }
-}
+    };
+};
 
 module.exports = { objAleatorio }
