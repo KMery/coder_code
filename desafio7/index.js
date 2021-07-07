@@ -12,7 +12,7 @@ app.get('*', function(req, res){
         message: 'No se ha encontrado la página'
     }
     res.status(404).send(display_error);
-  });
+});
 
 app.listen(port, (req, res) => {
     console.log(`Server running on ${port}`)
