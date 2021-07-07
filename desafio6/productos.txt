@@ -1,4 +1,1 @@
-[
-    {"title":"prodTitle","price":150.5,"thumbnail":"https://link.com","id":0},
-    {"title":"prodTitle","price":150.5,"thumbnail":"https://link.com","id":3}
-]
+[{"title":"prodTitle","price":150.5,"thumbnail":"https://link.com","id":1},{"title":"prodTitle","price":150.5,"thumbnail":"https://link.com","id":2}]
