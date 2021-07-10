@@ -1,5 +1,5 @@
 const product_data = ['id', 'title', 'price', 'thumbnail'];
-
+//Verifica los atributos recibidos sean correctos
 const checkAttr = (req, res, next) => {
     let wrong_data = [];
     Object.keys(req.body).forEach(attribute => {
