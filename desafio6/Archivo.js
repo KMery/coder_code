@@ -1,5 +1,4 @@
 const fs = require('fs');
-const Product = require('./Producto');
 
 class Archivo {
     constructor(arch) {
@@ -20,18 +19,17 @@ class Archivo {
         }
     }
 
-    async guardar(texto_a_guardar) {
+    async guardar(producto_a_guardar) {
         try {
             let prev_productos = await this.leer();
-            let { title, price, thumbnail} = texto_a_guardar;
-            let nuevo_producto = new Product(title, price, thumbnail);
             if (prev_productos !== undefined) {
-                nuevo_producto.setID(prev_productos.length + 1);
-                prev_productos.push(nuevo_producto);
-                await fs.promises.writeFile(this.arch, JSON.stringify(prev_productos));
+                producto_a_guardar.setID(prev_productos.length + 1);
+                prev_productos.push(producto_a_guardar);
+                let prev_productos_str = JSON.stringify(prev_productos);
+                await fs.promises.writeFile(this.arch, prev_productos_str);
             } else {
-                nuevo_producto.setID(1);
-                await fs.promises.writeFile(this.arch, JSON.stringify([nuevo_producto]));
+                producto_a_guardar.setID(1);
+                await fs.promises.writeFile(this.arch, prev_productos_str);
             }
             console.log('Se ha guardado!');
         } catch (error) {
