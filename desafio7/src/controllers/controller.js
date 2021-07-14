@@ -2,9 +2,8 @@ const fs = require('fs');
 
 const readModuleFile = async (path) => {
     try {
-        var filename = require.resolve(path);
-        items = fs.promises.readFile(filename, 'utf8');
-        return items;
+        const filename = require.resolve(path);
+        return await fs.promises.readFile(filename, 'utf8');
     } catch (err) {
         console.error(err);
     }
@@ -14,21 +13,23 @@ let count_items = 0;
 let count_item = 0;
 
 const getItems = async (req, res) => {
-    const items = await readModuleFile('../data/productos.txt');
+    let items = await readModuleFile('../data/productos.txt');
+    items = JSON.parse(items);
     count_items++;
     let display_items = {
-        items: JSON.parse(items),
-        cantidad: JSON.parse(items).length
+        items: items,
+        cantidad: items.length
     };
     res.send(display_items);
 };
 
 const getRandomItem = async (req, res) => {
     count_item++;
-    const items = await readModuleFile('../data/productos.txt');
-    let random_pick = Math.floor(Math.random() * JSON.parse(items).length);
+    let items = await readModuleFile('../data/productos.txt');
+    items = JSON.parse(items);
+    let random_pick = Math.floor(Math.random() * items.length);
     let display_items = {
-        item: JSON.parse(items)[random_pick]
+        item: items[random_pick]
     };
     res.send(display_items);
 };
