@@ -45,6 +45,8 @@ const postProduct = (req, res) => {
 // PUT productos/:id
 const updateProduct = (req, res) => {
     let id = req.params.id;
+
+    // TODO: Solo actualizar campos que se hayan pasado en el req.body
     let product = products.find(product => {
         if (product.id == id) {
             product.title = req.body.title;
@@ -72,6 +74,7 @@ const deleteProduct = (req, res) => {
     let product_deleted = products[index_product];
     products.splice(index_product, 1);
 
+    // El indexOf devuelve -1 si no encuentra el producto
     if (isNaN(index_product)) {
         let msg = {
             'error': 'producto no encontrado'
