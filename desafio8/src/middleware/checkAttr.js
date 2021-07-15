@@ -1,5 +1,7 @@
+// El id se asigna desde el backend, el cliente no debería poder asignarlo
 const product_data = ['id', 'title', 'price', 'thumbnail'];
 
+// TODO: Validar que todos los campos para guardar el producto esten en el req.body
 const checkAttr = (req, res, next) => {
     let wrong_data = [];
     Object.keys(req.body).forEach(attribute => {
