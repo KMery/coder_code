@@ -46,12 +46,12 @@ const postProduct = (req, res) => {
 const updateProduct = (req, res) => {
     let id = req.params.id;
 
-    // TODO: Solo actualizar campos que se hayan pasado en el req.body
+    //Se actualiza para que tome solo atributos en req.body
     let product = products.find(product => {
         if (product.id == id) {
-            product.title = req.body.title;
-            product.price = req.body.price;
-            product.thumbnail = req.body.thumbnail;
+            Object.keys(req.body).forEach(attr => {
+                product[attr] = req.body[attr];
+            });
             return product;
         }
     });
@@ -75,7 +75,7 @@ const deleteProduct = (req, res) => {
     products.splice(index_product, 1);
 
     // El indexOf devuelve -1 si no encuentra el producto
-    if (isNaN(index_product)) {
+    if (index_product === -1) {
         let msg = {
             'error': 'producto no encontrado'
         };
