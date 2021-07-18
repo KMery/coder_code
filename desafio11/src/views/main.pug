@@ -1,0 +1,23 @@
+extends index
+
+block partial 
+    body
+        if data
+            h2="Vista productos"
+            table.table
+                thead 
+                    tr
+                        th(scope="col")="Id"
+                        th(scope="col")="Title"
+                        th(scope="col")="Price"
+                        th(scope="col")="Thumbnail"
+                tbody
+                    each product in data 
+                        tr(scope="row") 
+                            td=product.id
+                            td=product.title
+                            td=product.price
+                            td
+                                img(src=product.thumbnail, alt="image not found :C")
+        else 
+            h4="No hay productos"
