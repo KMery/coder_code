@@ -41,11 +41,28 @@ http.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
+
+const fs = require("fs");
+let productos = [];
+const saveProduct = async (producto_a_guardar) => {
+    try {
+        productos.push(producto_a_guardar);
+        let productos_str = JSON.stringify(productos);
+        await fs.promises.writeFile(path.join(__dirname, '/public/productos.txt'), productos_str);
+        console.log('Se ha guardado!');
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
 io.on('connection', socket => {
     console.log('new connection', socket.id);
 
+
     socket.on('addProduct', product => {
         console.log('from socket in app.js', product);
+        saveProduct(product)
         io.sockets.emit('addProduct', product);
     });
 });

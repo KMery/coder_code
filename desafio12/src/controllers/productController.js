@@ -1,10 +1,28 @@
 const Product = require('../models/Product');
 let products = [];
 let id_incremental = 1;
+const fs = require('fs');
+const path = require('path');
+
+const leer = async () => {
+    try { 
+        const productos = await fs.promises.readFile(path.join(__dirname, '../public/productos.txt'), 'utf-8');
+        if (productos.length > 0) {
+            console.log(JSON.parse(productos));
+            return JSON.parse(productos);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 
 // GET productos - devuelve array de productos
-const getProducts = (req, res) => {
-    res.render('main', { data: products });
+const getProducts = async (req, res) => {
+    let read_products = await leer();
+    console.log('getProducts', read_products);
+    res.render('main', { data: read_products });
+    // res.render('main', { data: products });
 };
 
 // GET productos/:id - devuelve el producto cuyo id se ha proporcionado
@@ -34,9 +52,11 @@ const postProduct = (req, res, next) => {
         product.setID(id_incremental);
         id_incremental++;
         products.push(product);
+        console.log('postProduct:', products);
 
         //Redirigiendo a formulario vacio
         // res.redirect('/api/guardar');
+        res.redirect('/api/productos');
     } catch (error) {
         return res.status(500).send({'error': error.message});
     };
