@@ -1,0 +1,1 @@
+[{"id":1,"title":"test","price":"12.2","thumbnail":"https://picsum.photos/200"},{"id":1,"title":"test2","price":"21","thumbnail":"https://picsum.photos/200"}]
