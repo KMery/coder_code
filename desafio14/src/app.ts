@@ -1,4 +1,4 @@
-import Product from "./models/Product";
+import Chat from "./models/Chat";
 
 const express = require('express');
 const handlebars = require('express-handlebars');
@@ -43,32 +43,22 @@ http.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
+import { saveProduct, readArch } from './utils/utils';
+let path_products = path.join(__dirname, '/public/productos.txt');
 
-const fs = require("fs");
-let productos:any = [];
-const saveProduct = async (arch:string, a_guardar:any) => {
-    try {
-        productos.push(a_guardar);
-        let productos_str = JSON.stringify(productos);
-        await fs.promises.writeFile(arch, productos_str);
-        console.log('Se ha guardado!');
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-
-io.on('connection', (socket:any) => {
+io.on('connection', async (socket:any) => {
     console.log('new connection', socket.id);
 
-    socket.on('addProduct', (product:Product) => {
-        console.log('from socket in app.js', product);
-        saveProduct(path.join(__dirname, '/public/productos.txt'), product)
+    socket.on('addProduct', (product:any) => {
+        saveProduct(path_products, product)
         io.sockets.emit('addProduct', product);
     });
 
-    socket.on('addChat', (chat:any) => {
-        saveProduct(path.join(__dirname, '/public/chat.txt'), chat)
-        io.sockets.emit('addChat', chat);
+    io.sockets.emit('countProduct', await readArch(path_products));
+
+    socket.on('addChat', (chat:Chat) => {
+        let new_chat = new Chat(chat.email, chat.time, chat.msg)
+        saveProduct(path.join(__dirname, '/public/chat.txt'), new_chat)
+        io.sockets.emit('addChat', new_chat);
     });
 });

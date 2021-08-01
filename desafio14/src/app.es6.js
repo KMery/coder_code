@@ -45,7 +45,7 @@ http.listen(port, () => {
 });
 
 const { saveProduct, readArch } = require('./utils/utils');
-let path_products = path.join(__dirname, '/public/productos.txt')
+let path_products = path.join(__dirname, '/public/productos.txt');
 
 io.on('connection', async (socket) => {
     console.log('new connection', socket.id);
@@ -58,7 +58,6 @@ io.on('connection', async (socket) => {
     io.sockets.emit('countProduct', await readArch(path_products));
 
     socket.on('addChat', chat => {
-        console.log('chat.email', chat.email);
         let new_chat = new Chat(chat.email, chat.time, chat.msg)
         saveProduct(path.join(__dirname, '/public/chat.txt'), new_chat)
         io.sockets.emit('addChat', new_chat);
