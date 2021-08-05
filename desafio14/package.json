@@ -10,7 +10,7 @@
     "copy:files": "cpx './src/public/**' 'dist/public'",
     "copy:templates": "cpx './src/views/**' 'dist/views'",
     "build": "./node_modules/.bin/tsc",
-    "ServerES6toJS5": "node_modules/.bin/babel ./src/app.es6.js -o ./src/server.js -w",
+    "ServerES6toJS5": "node_modules/.bin/babel ./src/app.es6.js -o ./src/server.js",
     "ServerTStoJS5": "npm run build && npm run copy:templates && npm run copy:files"
   },
   "keywords": [],
