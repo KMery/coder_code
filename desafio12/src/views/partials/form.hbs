@@ -1,0 +1,11 @@
+<div class="card col-8 m-auto">
+    <h1 class="card-header text-center">Ingreso de datos</h1>
+    <div class="card-body">
+        <form action="/api/productos" method="POST" class="p-5">
+            <input class="form-control" id="title" name="title" type="text" placeholder="Add a title..." required>
+            <input class="form-control mt-2" id="price" name="price" type="text" placeholder="Enter price..." pattern="\d*([.,]?\d+)" required>
+            <input class="form-control mt-2" id="thumbnail" name="thumbnail" type="text" placeholder="Link to image...">
+            <button type="submit" class="form-control btn btn-dark mt-2" id="addButton">Submit</button>
+        </form>
+    </div>
+</div>
