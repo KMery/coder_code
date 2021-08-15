@@ -1,0 +1,11 @@
+<%- include('./partials/head') %>
+
+<div class="card col-8">
+    <h1 class="card-header">Ingreso de productos</h1>
+    <form action="/api/productos" method="POST" class="form-control p-5">
+        <input type="text" placeholder="Enter title..." class="form-control" name="title">
+        <input type="text" placeholder="Enter price..." class="form-control mt-2" name="price" pattern="\d*([.,]?\d+)">
+        <input type="text" placeholder="Link to image..." class="form-control mt-2" name="thumbnail">
+        <button type="submit" class="form-control btn btn-dark mt-2 block">Submit</button>
+    </form>
+</div>
