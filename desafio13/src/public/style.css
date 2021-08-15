@@ -1,0 +1,12 @@
+img {
+    width: 3rem;
+}
+
+.forms {
+    display: flex;
+    justify-content: space-around;
+}
+
+.text-brown {
+    color: brown;
+}
