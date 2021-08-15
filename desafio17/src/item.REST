@@ -1,0 +1,34 @@
+### Para utilizar con complemento REST Client
+@port=8080
+@api=http://localhost:{{port}}
+
+GET {{api}}/items
+###
+GET {{api}}/items/1
+###
+POST {{api}}/items
+Content-Type: application/json
+
+{   
+    "nombre": "Apio",
+    "categoria" : "Vegetales",
+    "stock": 23
+}
+###
+PUT {{api}}/items/1
+Content-Type: application/json
+
+{   
+    "nombre": "producto actualizado",
+    "categoria" : "Lacteos",
+    "stock": 12
+}
+###
+PUT {{api}}/items/1
+Content-Type: application/json
+
+{   
+    "nombre": "producto actualizado"
+}
+###
+DELETE  {{api}}/items/1
