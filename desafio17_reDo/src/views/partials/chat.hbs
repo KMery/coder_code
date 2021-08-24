@@ -1,0 +1,23 @@
+<div class="card m-auto">
+    <div>
+        <h1 class="card-header text-center">Chat center</h1>
+        <form action="/api/chat" method="POST"  class="form-group p-5">
+            <input type="email"class="form-control" name="email" id="email" placeholder="Enter email..." required>
+            <input type="text" class="form-control mt-2" name="chat_msg" id="chat_msg" placeholder="Enter message..." required>
+            <button type="submit" class="form-control btn btn-info mt-2" id="chat_button">Send msg!</button>
+        </form>
+    </div>
+    <div id="chat_output" class="px-3">
+        {{#if chat}}
+            {{#each chat}}
+                <br/>
+                <ul class="list-inline m-0">
+                    <li class="list-inline-item"><bold class="text-primary"> {{this.email}} </bold></li>
+                    <li class="list-inline-item"><p class="text text-brown"> {{this.created_at}} </p></li>
+                    <li class="list-item"><i class="text-success"> {{this.message}} </i></li>
+                </ul>
+                <br/>
+            {{/each}}    
+        {{/if}}
+    </div>
+</div>
