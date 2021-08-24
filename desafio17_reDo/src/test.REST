@@ -1,0 +1,33 @@
+@port=8080
+@api=http://localhost:{{port}}
+
+GET {{api}}/api/productos
+###
+GET {{api}}/api/productos/4
+###
+POST {{api}}/api/productos
+Content-Type: application/json
+
+{   
+    "title": "producto 2",
+    "price": 23.99,
+    "thumbnail" : "https://picsum.photos/200"
+}
+###
+PUT  {{api}}/api/productos/1
+Content-Type: application/json
+
+{   
+    "title": "this is an update",
+    "price": 89,
+    "thumbnail" : "https://picsum.photos/200"
+}
+###
+PUT {{api}}/api/productos/1
+Content-Type: application/json
+
+{   
+    "title": "this is another title"
+}
+###
+DELETE  {{api}}/api/productos/5
