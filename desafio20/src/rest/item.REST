@@ -1,0 +1,38 @@
+### Para utilizar con complemento REST Client
+@port=8080
+@api=http://localhost:{{port}}
+
+@id=612bf364b57899616313a786
+
+GET {{api}}/items
+###
+GET {{api}}/items/{{id}}
+###
+POST {{api}}/items
+Content-Type: application/json
+
+{   
+    "title": "producto nuevo desde item.REST",
+    "price": 3456.90,
+    "thumbnail" : "https://picsum.photos/200",
+    "stock": 41
+}
+###
+PUT {{api}}/items/{{id}}
+Content-Type: application/json
+
+{   
+    "title": "producto actualizado",
+    "price": 234.56,
+    "thumbnail" : "https://picsum.photos/200",
+    "stock": 12
+}
+###
+PUT {{api}}/items/{{id}}
+Content-Type: application/json
+
+{   
+    "title": "Titulo actualizado"
+}
+###
+DELETE  {{api}}/items/{{id}}

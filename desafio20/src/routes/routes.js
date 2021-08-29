@@ -7,8 +7,15 @@ const {
     updateItem,
     deleteItem,
 } = require('../controllers/itemsController');
+const {
+    getMessages,
+    getMessageById,
+    postMessage,
+    updateMessage,
+    deleteMessage,
+} = require('../controllers/messagesController')
 const checkAttr = require('../middleware/checkAttr');
-
+//ITEMS routes
 // GET items - devuelve array de items
 router.get('/items', getItems);
 
@@ -19,9 +26,26 @@ router.get('/items/:id', getItemById);
 router.post('/items', checkAttr, postItem);
 
 // PUT items/:id
-router.put('/items/:id', updateItem);
+router.put('/items/:id', checkAttr, updateItem);
 
 // DELETE items/:id
 router.delete('/items/:id', deleteItem);
+
+
+//MESSAGES routes
+//GET all messages
+router.get('/messages', getMessages);
+
+//GET message by Id
+router.get('/messages/:id', getMessageById);
+
+//POST new message
+router.post('/messages', checkAttr, postMessage);
+
+//UPDATE message by Id
+router.put('/messages/:id', checkAttr, updateMessage);
+
+//DELETE message by Id
+router.delete('/messages/:id', deleteMessage);
 
 module.exports = router;

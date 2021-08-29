@@ -14,7 +14,7 @@ const getItemById = async (req, res) => {
     try {
         const item = new ItemService();
         const resultItem = await item.getItemById(req.params.id);
-        if (resultItem.length === 0) {
+        if (!resultItem) {
             return res.status(400).send({error: `No existe id ${req.params.id}`})
         }
 
@@ -32,7 +32,7 @@ const postItem = async (req, res, next) => {
         const item = new ItemService();
         const resultItem = await item.createItem(req.body);
         res.send({
-            newItemId: resultItem
+            newItem: resultItem
         });
     } catch (error) {
         return res.status(500).send({'error': error.message});
@@ -45,12 +45,12 @@ const updateItem = async (req, res) => {
         const item = new ItemService();
         const resultItem = await item.updateItem(req.params.id, req.body);
 
-        if (resultItem === 0) {
+        if (!resultItem) {
             return res.status(400).send({error: `No es posible actualizar id ${req.params.id}`})
         }
 
         res.send({
-            updateId: resultItem
+            updatedId: resultItem._id
         });
     } catch (error) {
         return res.status(500).send({'error': error.message});
@@ -68,7 +68,7 @@ const deleteItem = async (req, res) => {
         }
 
         res.send({
-            deleteId: resultItem
+            deleteItem: resultItem
         });
     } catch (error) {
         return res.status(500).send({'error': error.message});

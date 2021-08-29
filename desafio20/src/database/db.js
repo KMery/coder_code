@@ -1,7 +1,16 @@
 require('dotenv').config();
-const knex = require('knex');
-const knexfile = require('./connDB');
 
-const db = knex(knexfile[process.env.NODE_ENV || 'development']);
+const itemSchema = require('./schemas/items')
+const messageSchema = require('./schemas/messages')
 
-module.exports = db;
+const mongoose = require("mongoose");
+mongoose.connect(`mongodb://localhost:27017/${process.env.DATABASE}`, {useNewUrlParser: true});
+
+
+const Item = mongoose.model("Producto", new mongoose.Schema(itemSchema, { timestamps: true }));
+const Message = mongoose.model("Mensaje", new mongoose.Schema(messageSchema, { timestamps: true }));
+
+module.exports = {
+    Item,
+    Message
+}

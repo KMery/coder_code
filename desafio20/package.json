@@ -9,17 +9,14 @@
     "dev": "nodemon src/app.js",
     "copy:files": "cpx './src/public/**' 'dist/public'",
     "copy:templates": "cpx './src/views/**' 'dist/views'",
-    "build": "./node_modules/.bin/tsc",
-    "knex:make_migration": "npx knex migrate:make init --migrations-directory src/database/migrations",
-    "knex:migrate": "npx knex migrate:latest --knexfile src/database/connDB.js",
-    "knex:down": "npx knex migrate:down --knexfile src/database/connDB.js"
+    "build": "./node_modules/.bin/tsc"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "knex": "^0.21.21",
     "mongoose": "^6.0.2",
     "mysql2": "^2.3.0"
   },

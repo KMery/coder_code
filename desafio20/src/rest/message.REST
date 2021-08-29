@@ -1,0 +1,34 @@
+### Para utilizar con complemento REST Client
+@port=8080
+@api=http://localhost:{{port}}
+
+@id=612be987447b388c0d7e516a
+
+GET {{api}}/messages
+###
+GET {{api}}/messages/{{id}}
+###
+POST {{api}}/messages
+Content-Type: application/json
+
+{   
+    "email": "mail123@testmail.com",
+    "message" : "from message.REST test 2"
+}
+###
+PUT {{api}}/messages/{{id}}
+Content-Type: application/json
+
+{   
+    "email": "test123_mail@test.com",
+    "message" : "Update from message.REST"
+}
+###
+PUT {{api}}/messages/{{id}}
+Content-Type: application/json
+
+{   
+    "message": "Mensaje actualizado"
+}
+###
+DELETE  {{api}}/messages/{{id}}

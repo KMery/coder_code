@@ -1,10 +1,13 @@
 //Control de atributos mandados
-const product_data = ['nombre', 'categoria', 'stock'];
+const product_data = ['title', 'price', 'thumbnail', 'stock'];
+const message_data = ['email', 'message'];
 
 //Validación de atributos que envia el cliente
 const checkAttr = (req, res, next) => {
-    let required_data = requiredData(req);
-    let wrong_data = checkWrongData(req);
+    let list_of_required = (req.originalUrl.includes('items')) ? product_data : message_data; 
+
+    let required_data = requiredData(req, list_of_required);
+    let wrong_data = checkWrongData(req, list_of_required);
 
     let msg = [];
     if (required_data !== undefined) {
@@ -23,10 +26,10 @@ const checkAttr = (req, res, next) => {
 }
 
 //Valida si están los campos requeridos
-const requiredData = (req) => {
+const requiredData = (req, list_of_required) => {
     let required_data = [];
 
-    product_data.forEach(attr => {
+    list_of_required.forEach(attr => {
         if (req.body[attr] === undefined) {
             required_data.push(attr)
         }
@@ -43,11 +46,11 @@ const requiredData = (req) => {
 }
 
 //Valida si existe data erronea
-const checkWrongData = (req) => {
+const checkWrongData = (req, list_of_required) => {
     let wrong_data = [];
 
     Object.keys(req.body).forEach(attribute => {
-        if (product_data.includes(attribute) === false) {
+        if (list_of_required.includes(attribute) === false) {
             wrong_data.push(attribute);
         };
     });
